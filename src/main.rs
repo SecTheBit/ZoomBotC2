@@ -1,21 +1,12 @@
-use std::{fs::File, path::Path};
-use serde::Deserialize;
 use reqwest;
 mod http;
 use http::httpGetRequest;
 mod Estruct;
 use Estruct::configuration;
 mod operation;
+mod parser;
+use parser::config_parser;
 
-
-fn config_parser() -> configuration{
-    let cfile = Path::new("C:\\Users\\kakashi\\ZoomBotC2\\src\\config.json");
-    let file = File::open(cfile).expect("error in readig config file");
-    let config : configuration = serde_json::from_reader(file).expect("error while reading the config file");
-    println!("{:?}",config);
-    config
-
-}
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>>{

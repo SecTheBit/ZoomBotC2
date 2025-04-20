@@ -16,6 +16,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
     let mut access_token : String = config.access_token;
     let email: String = config.email;
     host.push_str("?to_contact=kiyir68411@clubemp.com");
+    host.push_str("&page_size=1000");
     //println!("host is {}",host);
     http::httpGetRequest(host.as_str(),access_token.as_str()).await?;
     Ok(())    

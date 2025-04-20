@@ -17,8 +17,11 @@ pub async fn httpGetRequest(host: &str, access_token:&str) -> Result<(),Error> {
     let client = reqwest::Client::new();
     let mut count_total_message = 0;
     let mut count_new_message = 0;
+   
     loop {
         //let body = reqwest::get(host).header("abcd:def").await?;
+        thread::sleep(Duration::from_secs(15));
+
         let response = client.get(host).header(String::from("Authorization"),access_token).send().await?;
         //println!("status is {}",response.status());
         //
@@ -28,13 +31,14 @@ pub async fn httpGetRequest(host: &str, access_token:&str) -> Result<(),Error> {
         let mut command: Vec<Message> = root.messages;
 
         //to count number of new messages
-        count_new_message=command.len()-count_total_message;
-        println!("Total number of message is {}",command.len());
-        if command.len()==count_total_message {
-            thread::sleep(Duration::from_secs(5));
+        //count_new_message=command.len()-count_total_message;
+        //println!("Total number of message is {}",command.len());
+    /*    if command.len()==count_total_message {
+            //thread::sleep(Duration::from_secs(5));
             continue;
         }
-        else {
+    */
+        //else {
             
         /*
             let new_msg = command.pop();
@@ -55,15 +59,15 @@ pub async fn httpGetRequest(host: &str, access_token:&str) -> Result<(),Error> {
                 }
             }
         */
-            
-            for msg in 0..count_new_message{
+            let new_command = &command[0];
+            /*for msg in 0..count_new_message{
                 let new_command: &Message = if count_new_message == 1 {
                     &command[0]
                 } 
                 else {
-                    &command.pop().unwrap()
+                    &command[0]
                 };
-                
+            */    
                 
                 //let new_command = command.pop().unwrap();
                 
@@ -77,23 +81,23 @@ pub async fn httpGetRequest(host: &str, access_token:&str) -> Result<(),Error> {
                     httpPostRequest(resp).await;
                     println!("Execution done");
  
-                    thread::sleep(Duration::from_secs(1)); 
+                    thread::sleep(Duration::from_secs(10)); 
                     //println!("final response is {}",resp);
 
                 }
-                count_new_message+=1;
+                //count_new_message+=1;
                 count_total_message+=1; 
                 
                 
                    
             }
             
-        }
+        
         //since the ate limit for zoom API call is 2 per second, we are calling sleep function for 4 s
         thread::sleep(Duration::from_secs(5));
         
     
-    }
+    //}
     Ok(())
 } 
 
@@ -104,7 +108,7 @@ async fn httpPostRequest(resp: String) -> Result<(),Error>{
     let mut access_token : String = config.access_token;
     let email : String = config.email;
     println!("Inside httpPost");
-    let final_resp = String::from("output") + &resp;
+    let final_resp = String::from("output ") + &resp;
 
 
     // crafting the payload to send over zoom API

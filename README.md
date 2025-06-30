@@ -33,10 +33,10 @@ ZoomBotC2 is a stealthy Command and Control (C2) framework that leverages Zoom's
   -  Copy the following values:
       - Client ID
       - Client Secret
-       Use the following command with client ID and Secret to genrate the access token.
-     ```
-     curl -X POST "https://zoom.us/oauth/token" -H "Authorization: Basic <base64 encode of client_id:client_secret> " -H "Content-Type:application/x-www-form-urlencoded" -  d "grant_type=authorization_code&code=<code generated from the >&redirect_uri=https://example.com"
-     ```
+      - Use the following command with client ID and Secret to genrate the access token.
+         ```
+         curl -X POST "https://zoom.us/oauth/token" -H "Authorization: Basic <base64 encode of client_id:client_secret> " -H "Content-Type:application/x-www-form-        urlencoded" -  d "grant_type=authorization_code&code=<code generated from the >&redirect_uri=https://example.com"
+         ```
   - This will help to get the access token of the application
   - We can now use the access token in the server and client code to get it working.
 

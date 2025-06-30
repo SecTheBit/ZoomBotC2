@@ -49,11 +49,16 @@ cd ZoomBotC2
    - Email in config.json file
    - Email in the main.rs file
    - Access token in the config.json file
-  
+
 9. Once everything is set, we can run the executable on the victim and python server on attacker machine.
 
 
 ## 🎬 Demo
+
+<img width="1288" alt="Screenshot 2025-04-18 at 10 59 49 PM" src="https://github.com/user-attachments/assets/ddd1afc9-f082-4aaf-b95c-1fb5eeb51182" />
+<img width="1057" alt="Screenshot 2025-06-30 at 5 31 51 PM" src="https://github.com/user-attachments/assets/a2b451a2-c9d3-4893-9614-448ee8831dcb" />
+
+
 
 
 

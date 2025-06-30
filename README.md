@@ -1,6 +1,9 @@
 # ZoomBotC2
 
+<img width="731" alt="Screenshot 2025-06-30 at 5 28 15 PM" src="https://github.com/user-attachments/assets/f49b2e1c-5676-4e76-af6e-e550263d6bd3" />
+
 ZoomBotC2 is a stealthy Command and Control (C2) framework that leverages Zoom's API endpoints for covert communication between implants and the operator. It uses legitimate Zoom messaging APIs to send commands and receive results, effectively blending in with regular Zoom traffic.
+
 
 ---
 
